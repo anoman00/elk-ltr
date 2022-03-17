@@ -1,12 +1,22 @@
 import os
 from jParsers import judgmentsFromFile, judgmentsByQid, duplicateJudgmentsByWeight
 
-training = 'train_judgements.txt'
-testing = 'test_judgements.txt'
-FULL = 'test1.txt'
-# FULL = 'judgements_es_f_no_dup.txt'
+# training = ''
+# testing = ''
+FULL = 'cleaned_judgements.txt' # <-- INSERT NAME OF FINAL JUDGEMENT TEXT FILE WITH FEATURES
+
 def trainModel(trainingData, modelOutput, whichModel=8):
     # java -jar RankLib-2.6.jar  -metric2t NDCG@4 -ranker 6 -kcv -train osc_judgments_wfeatures_train.txt -test osc_judgments_wfeatures_test.txt -save model.txt
+
+    # Ranking Algorithms: 
+    #   0: MART (gradient boosted regression tree)
+    #   1: RankNet
+    #   2: RankBoost
+    #   3: AdaRank
+    #   4: Coordinate Ascent
+    #   6: LambdaMART
+    #   7: ListNet
+    #   8: Random Forests
 
     # For random forest
     # - bags of LambdaMART models
@@ -76,5 +86,5 @@ def saveModel(esHost, scriptName, featureSet, modelFname):
 # trainJudgements, testJudgements = partitionJudgments(fullJudgements, testProportion=0.0)
 
 
-trainModel(FULL, 'model_2.txt', 8)
-saveModel(esHost='http://localhost:9200', scriptName="test_8", featureSet='testing_features', modelFname='model_2.txt')
+trainModel(FULL, 'model_ltr.txt', 8) # <-- INSERT NAME OF LTR MODEL
+saveModel(esHost='http://localhost:9200', scriptName="test_randomforest_8", featureSet='testing_features_w_scores', modelFname='model_ltr.txt') # <-- INSERT NAME OF LTR MODEL

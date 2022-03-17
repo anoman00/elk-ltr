@@ -9,7 +9,9 @@ import json
 # need to get scores from features not manual like below
 es = Elasticsearch(['http://localhost:9200/'], verify_certs=True)
 
-c_file_r = open('clicks.json', 'r')
+# Opens the click json data to attach document ID to each data point
+
+c_file_r = open('clicks.json', 'r') # <-- INSERT CLICKS DATA JSON
 c_data = json.load(c_file_r)
 c_file_r.close()
 
@@ -24,7 +26,7 @@ for click in c_data:
             }
         }
         # generates document id
-        res = es.search(index="tcb-20210826", body=search_params)
+        res = es.search(index="tcb1", body=search_params) # <-- INSERT INDEX NAME
         if res['hits']['hits'] == []:
             click["doc_id"] = None
 
@@ -38,14 +40,14 @@ for click in c_data:
     else:
         click["doc_id"] = None
 
-c_file_w = open("clicks.json", "w")
+c_file_w = open("clicks.json", "w") # <-- INSERT CLICKS DATA JSON
 json.dump(c_data, c_file_w)
 c_file_w.close()
 
-# create judgement list from the new jsons with no features
-j_txt_nof = open("clean_judgements_nof.txt", "w+")
+# Create judgement list from the new jsons with no features added (currently irrelevant)
+j_txt_nof = open("clean_judgements_nof_sample.txt", "w+")
 
-c_file_r = open('clicks.json', 'r')
+c_file_r = open('clicks.json', 'r') # <-- INSERT CLICKS DATA JSON
 c_data = json.load(c_file_r)
 c_file_r.close()
 
