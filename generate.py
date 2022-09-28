@@ -7,7 +7,7 @@ import json
 # Next step: get scores from explain, get url depth and body length
 # Lost step: need to figure out how storing features work (_ltr)
 # need to get scores from features not manual like below
-es = Elasticsearch(['http://localhost:9200/'], verify_certs=True)
+es = Elasticsearch('elk-latest', port=9200, verify_certs=True)
 
 # Opens the click json data to attach document ID to each data point
 
@@ -45,7 +45,7 @@ json.dump(c_data, c_file_w)
 c_file_w.close()
 
 # Create judgement list from the new jsons with no features added (currently irrelevant)
-j_txt_nof = open("clean_judgements_nof_sample.txt", "w+")
+j_txt_nof = open("judgements/clean_judgements_nof_sample.txt", "w+")
 
 c_file_r = open('clicks.json', 'r') # <-- INSERT CLICKS DATA JSON
 c_data = json.load(c_file_r)

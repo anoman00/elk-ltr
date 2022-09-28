@@ -3,7 +3,7 @@ from jParsers import judgmentsFromFile, judgmentsByQid, duplicateJudgmentsByWeig
 
 # training = ''
 # testing = ''
-FULL = 'cleaned_judgements.txt' # <-- INSERT NAME OF FINAL JUDGEMENT TEXT FILE WITH FEATURES
+FULL = 'judgements/cleaned_judgements_new.txt' # <-- INSERT NAME OF FINAL JUDGEMENT TEXT FILE WITH FEATURES
 
 def trainModel(trainingData, modelOutput, whichModel=8):
     # java -jar RankLib-2.6.jar  -metric2t NDCG@4 -ranker 6 -kcv -train osc_judgments_wfeatures_train.txt -test osc_judgments_wfeatures_test.txt -save model.txt
@@ -65,6 +65,7 @@ def saveModel(esHost, scriptName, featureSet, modelFname):
     headers = {'content-type': 'application/json'}
     fullPath = urljoin(esHost, path)
     print("POST %s" % fullPath)
+    print(esHost, fullPath)
     resp = requests.post(fullPath, headers=headers)
     if (resp.status_code >= 300):
         print(resp.text)
@@ -86,5 +87,5 @@ def saveModel(esHost, scriptName, featureSet, modelFname):
 # trainJudgements, testJudgements = partitionJudgments(fullJudgements, testProportion=0.0)
 
 
-trainModel(FULL, 'model_ltr.txt', 8) # <-- INSERT NAME OF LTR MODEL
-saveModel(esHost='http://localhost:9200', scriptName="test_randomforest_8", featureSet='testing_features_w_scores', modelFname='model_ltr.txt') # <-- INSERT NAME OF LTR MODEL
+trainModel(FULL, 'models/model_ltr_v2.txt', 8) # <-- INSERT NAME OF LTR MODEL
+saveModel(esHost='http://elk-latest:9200', scriptName="randomforest_8_v2", featureSet='features_w_age', modelFname='models/model_ltr_v2.txt') # <-- INSERT NAME OF LTR MODEL

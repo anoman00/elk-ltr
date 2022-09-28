@@ -7,8 +7,8 @@ import json
 # Next step: get scores from explain, get url depth and body length
 # Lost step: need to figure out how storing features work (_ltr)
 # need to get scores from features not manual like below
-es = Elasticsearch(['http://localhost:9200/'], verify_certs=True)
-
+es2 = Elasticsearch(['elk-latest:9200'], verify_certs=True)
+print(es2)
 body = {
   "query": {
     "match": {
